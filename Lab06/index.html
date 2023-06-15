@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Fiber</title>
+</head>
+<body>
+	<h1 id="res"></h1>
+	<label for="rotorA">A start</label>
+	<input type="text" name="rotorA">
+	<br>
+	<label for="rotorB">B start</label>
+	<input type="text" name="rotorB">
+	<br>
+	<label for="rotorC">C start</label>
+	<input type="text" name="rotorC">
+	<br>
+	<label for="message">Message</label>
+	<input type="text" name="message">
+	<br>
+	<button onclick="encrypt()">Submit</button>
+	<script>
+		const encrypt = () => {
+			const rotorA = document.querySelector('input[name="rotorA"]').value;
+			const rotorB = document.querySelector('input[name="rotorB"]').value;
+			const rotorC = document.querySelector('input[name="rotorC"]').value;
+			const message = document.querySelector('input[name="message"]').value;
+
+			fetch('http://localhost:3000/', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					rotorA,
+					rotorB,
+					rotorC,
+					message
+				})
+			}).then(res => res.json()).then(data => {
+				console.log(data);
+				document.querySelector('#res').innerHTML = data.message;
+			});
+		}
+	</script>
+</body>
+</html>
